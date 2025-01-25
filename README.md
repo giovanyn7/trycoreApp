@@ -104,9 +104,9 @@ Se genero un sistema en capas, escalable, desacoplado utilizando patrones de dis
 
 2. Clona este repositorio en tu máquina:
   
-   git clone <URL_DEL_REPOSITORIO>
+   git clone https://github.com/giovanyn7/trycoreApp
 
-   cd <NOMBRE_DEL_REPOSITORIO>
+   cd trycoreApp
 
 3. Construye y ejecuta los servicios con Docker Compose:
    
