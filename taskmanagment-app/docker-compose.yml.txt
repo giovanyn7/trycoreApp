@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  # Servicio de la base de datos PostgreSQL
+  db:
+    image: postgres:14
+    container_name: taskdb-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres        # Usuario de PostgreSQL
+      POSTGRES_PASSWORD: postgres    # Contraseña de PostgreSQL
+      POSTGRES_DB: taskdb            # Nombre de la base de datos
+    ports:
+      - "5432:5432"                  # Mapea el puerto 5432 del contenedor al host
+    volumes:
+      - db_data:/var/lib/postgresql/data # Persistencia de datos en el volumen
+
+  # Servicio del backend (Spring Boot)
+  backend:
+    build:
+      context: ./backend              # Carpeta donde está el backend
+      dockerfile: Dockerfile          # Nombre del archivo Dockerfile para el backend
+    container_name: task-backend
+    restart: always
+    ports:
+      - "8080:8080"                   # Mapea el puerto 8080 del contenedor al host
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/taskdb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    depends_on:
+      - db                            # Asegura que PostgreSQL se inicie antes del backend
+
+  # Servicio del frontend (Angular)
+  frontend:
+    build:
+      context: ./frontend             # Carpeta donde está el frontend
+      dockerfile: Dockerfile          # Nombre del archivo Dockerfile para el frontend
+    container_name: task-frontend
+    restart: always
+    ports:
+      - "4200:80"                     # Mapea el puerto 80 del contenedor al puerto 4200 del host
+    depends_on:
+      - backend                       # Asegura que el backend esté disponible antes de iniciar el frontend
+
+volumes:
+  db_data:                            # Volumen para la persistencia de datos de PostgreSQL

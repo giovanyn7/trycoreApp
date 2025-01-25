@@ -1,0 +1,16 @@
+<h2>Lista de Tareas</h2>
+<div>
+    <select [(ngModel)]="status" (change)="getTasks()">
+        <option value="">Todas</option>
+        <option value="PENDING">Pendientes</option>
+        <option value="IN_PROGRESS">En progreso</option>
+        <option value="COMPLETED">Completadas</option>
+    </select>
+    <input [(ngModel)]="userId" (change)="getTasks()" placeholder="Filtrar por id del usuario" type="number" />
+</div>
+<ul>
+    <li *ngFor="let task of tasks">
+        <strong>{{ task.description }}</strong> ({{ task.priority }}) - Asignada a
+        User ID: {{ task.assignedUser?.id }}
+    </li>
+</ul>

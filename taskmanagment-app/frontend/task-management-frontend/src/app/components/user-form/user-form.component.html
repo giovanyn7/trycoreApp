@@ -1,0 +1,10 @@
+<h2>Crear Usuario</h2>
+<form (ngSubmit)="createUser()">
+  <input [(ngModel)]="name" name="name" placeholder="Name" required />
+  <input [(ngModel)]="email" name="email" placeholder="Email" required />
+  <select [(ngModel)]="role" name="role" required>
+    <option value="DEVELOPER">Desarrollador</option>
+    <option value="LEAD">Líder Técnico</option>
+  </select>
+  <button type="submit">Crear Usuario</button>
+</form>
